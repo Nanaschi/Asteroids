@@ -13,7 +13,8 @@ public class Player : PoolerBase<Bullet> //TODO inject it
     [SerializeField] private float _movementSpeed; //TODO make it a SO model
     [SerializeField] private float _turnSpeed;
     [SerializeField] private Bullet _bullet;
-    [SerializeField] GameObject _bulletPool;
+    [SerializeField] [Tooltip("That's where bullets are placed")] 
+    private GameObject _bulletPool;
 
     #region private properties
 
