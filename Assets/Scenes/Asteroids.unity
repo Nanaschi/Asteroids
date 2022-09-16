@@ -273,7 +273,7 @@ MonoBehaviour:
   _rigidbody2D: {fileID: 427552092}
   _movementSpeed: 3
   _turnSpeed: 0.5
-  _bullet: {fileID: -3737573996569958335, guid: 762304de563e753419b288cf64e7e3e6, type: 3}
+  _bulletPrefab: {fileID: -3737573996569958335, guid: 762304de563e753419b288cf64e7e3e6, type: 3}
   _bulletPool: {fileID: 657096638}
 --- !u!1 &519420028
 GameObject:
@@ -651,6 +651,55 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!1 &1440431072
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1440431073}
+  - component: {fileID: 1440431074}
+  m_Layer: 0
+  m_Name: Spawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1440431073
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1440431072}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1440431074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1440431072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d23a96d886a2aa94580dd6f14c1fa200, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spawnRate: 2
+  _trajectoryVariance: 15
+  _spawnAmount: 2
+  _spawnDistance: 15
+  _asteroidPrefab: {fileID: 7753383184784707283, guid: ed378722b622e05499a2889650b4d04a, type: 3}
 --- !u!1 &1469310373
 GameObject:
   m_ObjectHideFlags: 0

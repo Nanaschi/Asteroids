@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 public class Player : PoolerBase<Bullet> //TODO inject it
 {
@@ -12,8 +13,9 @@ public class Player : PoolerBase<Bullet> //TODO inject it
     [SerializeField] private Rigidbody2D _rigidbody2D;
     [SerializeField] private float _movementSpeed; //TODO make it a SO model
     [SerializeField] private float _turnSpeed;
-    [SerializeField] private Bullet _bullet;
-    [SerializeField] [Tooltip("That's where bullets are placed")] 
+    [FormerlySerializedAs("_bullet")] [SerializeField] private Bullet _bulletPrefab;
+
+    [SerializeField] [Tooltip("That's where bullets are placed")]
     private GameObject _bulletPool;
 
     #region private properties
@@ -30,7 +32,7 @@ public class Player : PoolerBase<Bullet> //TODO inject it
         _playerInputActions = new PlayerInputActions();
         _playerInputActions.Enable();
 
-        InitPool(_bullet);
+        InitPool(_bulletPrefab);
     }
 
     #region Enable/Disable

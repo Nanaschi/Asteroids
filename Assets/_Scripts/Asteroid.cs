@@ -9,12 +9,26 @@ public class Asteroid : MonoBehaviour
     private const int FullCircle = 360;
 
     private float _size = 1f;
-    private float _minSize = .5f;
-    private float _maxSize = 1.5f;
-    
+    [SerializeField] private float _speed;
+
+
+    [SerializeField] private float _minSize = .5f;
+    [SerializeField] private float _maxSize = 1.5f;
+
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private Rigidbody2D _rigidbody2D;
     [SerializeField] private Sprite[] _sprite;
+
+
+    public float Size
+    {
+        get => _size;
+        set => _size = value;
+    }
+
+    public float MinSize => _minSize;
+
+    public float MaxSize => _maxSize;
 
     private void Start()
     {
@@ -25,5 +39,11 @@ public class Asteroid : MonoBehaviour
         transform.localScale = Vector3.one * _size;
 
         _rigidbody2D.mass = _size;
+    }
+
+    public void SetTrajectory(Vector2 direction)
+    {
+        _rigidbody2D.AddForce(direction * _speed);
+        Destroy(gameObject, 30f);//TODO: change to pool 
     }
 }
