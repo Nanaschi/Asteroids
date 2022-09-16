@@ -7,6 +7,9 @@ using UnityEngine.InputSystem;
 public class Player : MonoBehaviour
 {
     private PlayerInputActions _playerInputActions; //TODO transfer into DI
+    private bool _thrusting;
+    private float _turnDirection;
+    [SerializeField] private Rigidbody2D _rigidbody2D;
 
     private void Awake()
     {
@@ -32,7 +35,16 @@ public class Player : MonoBehaviour
 
     private void MovementPerformed(InputAction.CallbackContext callbackContext)
     {
-        Debug.Log("Something");
-        print(callbackContext.ReadValue<Vector2>());
+        var readVector2 = callbackContext.ReadValue<Vector2>();
+        _thrusting = readVector2.y > 0;
+        _turnDirection = 0;
+        if (readVector2.x < 0)
+        {
+            _turnDirection = 1f; print("Left");
+        }
+        else if (readVector2.x > 0)
+        {
+            _turnDirection = -1f; print("Right");
+        }
     }
 }
