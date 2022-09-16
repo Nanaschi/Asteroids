@@ -1,11 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using _Scripts;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Player : PoolerBase<Bullet>
+public class Player : PoolerBase<Bullet> //TODO inject it
 {
     private PlayerInputActions _playerInputActions; //TODO transfer into DI
     private bool _thrusting;
@@ -14,6 +13,7 @@ public class Player : PoolerBase<Bullet>
     [SerializeField] private float _movementSpeed; //TODO make it a SO model
     [SerializeField] private float _turnSpeed;
     [SerializeField] private Bullet _bullet;
+    [SerializeField] GameObject _bulletPool;
 
     #region private properties
 
@@ -38,14 +38,14 @@ public class Player : PoolerBase<Bullet>
     {
         _playerInputActions.Player.Shoot.performed += Shoot;
     }
-    
+
     private void OnDisable()
     {
         _playerInputActions.Player.Shoot.performed -= Shoot;
     }
 
     #endregion
-    
+
     private void FixedUpdate()
     {
         if (MovingForward) Movement();
@@ -60,7 +60,6 @@ public class Player : PoolerBase<Bullet>
 
     private void Movement()
     {
-        var readVector2PlayerMovement = _playerInputActions.Player.Movement.ReadValue<Vector2>();
         _rigidbody2D.AddForce(TransformUp * _movementSpeed);
     }
 
@@ -73,35 +72,21 @@ public class Player : PoolerBase<Bullet>
     }
 
 
-    protected override void GetSetup(Bullet obj)
+    protected override void GetSetup(Bullet bullet)
     {
-        base.GetSetup(obj);
-        
-        var bulletTransform = obj.transform;
+        base.GetSetup(bullet);
+
+        var bulletTransform = bullet.transform;
         bulletTransform.position = transform.position;
         bulletTransform.rotation = transform.rotation;
-        obj.OnBulletCollided += Release;
+        bullet.transform.SetParent(_bulletPool.transform);
+        bullet.OnBulletCollided += Release;
     }
 
     protected override void ReleaseSetup(Bullet obj)
     {
         base.ReleaseSetup(obj);
-        
+
         obj.OnBulletCollided -= Release;
     }
-    /* private void MovementPerformed(InputAction.CallbackContext callbackContext)
-     {
-         readVector2 = callbackContext.ReadValue<Vector2>();
-         _thrusting = readVector2.y > 0;
-         _turnDirection = 0;
-         if (readVector2.x < 0)
-         {
-             _turnDirection = 1f; print("Left");
-         }
-         else if (readVector2.x > 0)
-         {
-             _turnDirection = -1f; print("Right");
-         }
-         
-     }*/
 }
