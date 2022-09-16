@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using _Scripts;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,22 +11,39 @@ public class Player : MonoBehaviour
     private bool _thrusting;
     private float _turnDirection;
     [SerializeField] private Rigidbody2D _rigidbody2D;
-    [SerializeField] private float _movementSpeed;
+    [SerializeField] private float _movementSpeed; //TODO make it a SO model
     [SerializeField] private float _turnSpeed;
+    [SerializeField] private Bullet _bullet;
 
     #region private properties
 
+    private Vector3 TransformUp => transform.up;
     private bool Turning => _playerInputActions.Player.Movement.ReadValue<Vector2>().x != 0;
 
     private bool MovingForward => _playerInputActions.Player.Movement.ReadValue<Vector2>().y > 0;
 
     #endregion
-    
+
     private void Awake()
     {
         _playerInputActions = new PlayerInputActions();
         _playerInputActions.Enable();
     }
+    
+    #region Enable/Disable
+
+    private void OnEnable()
+    {
+        _playerInputActions.Player.Shoot.performed += Shoot;
+    }
+
+
+    private void OnDisable()
+    {
+        _playerInputActions.Player.Shoot.performed -= Shoot;
+    }
+
+    #endregion
 
     private void FixedUpdate()
     {
@@ -42,27 +60,22 @@ public class Player : MonoBehaviour
     private void Movement()
     {
         var readVector2PlayerMovement = _playerInputActions.Player.Movement.ReadValue<Vector2>();
-        _rigidbody2D.AddForce(transform.up* _movementSpeed);
+        _rigidbody2D.AddForce(TransformUp * _movementSpeed);
     }
 
+    
 
-    /* #region Enable/Disable
-
-    private void OnEnable()
+    private void Shoot(InputAction.CallbackContext callbackContext)
     {
-        _playerInputActions.Player.Movement.performed += MovementPerformed;
+        var bullet = ProjectileFactory.Projectile(_bullet, transform);
+        bullet.Project(TransformUp);
     }
 
 
-    private void OnDisable()
-    {
-        _playerInputActions.Player.Movement.performed -= MovementPerformed;
-    }
-
-    #endregion
 
 
-    private void MovementPerformed(InputAction.CallbackContext callbackContext)
+
+   /* private void MovementPerformed(InputAction.CallbackContext callbackContext)
     {
         readVector2 = callbackContext.ReadValue<Vector2>();
         _thrusting = readVector2.y > 0;
