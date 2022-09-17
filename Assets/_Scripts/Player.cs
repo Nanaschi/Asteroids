@@ -33,7 +33,7 @@ public class Player : PoolerBase<Bullet> //TODO inject it
 
     private void Awake()
     {
-        _playerInputActions = new PlayerInputActions();
+        _playerInputActions = new PlayerInputActions(); //TODO: add it into DI
         _playerInputActions.Enable();
         _rigidbody2D = GetComponent<Rigidbody2D>();
 
@@ -47,11 +47,13 @@ public class Player : PoolerBase<Bullet> //TODO inject it
     private void OnEnable()
     {
         _playerInputActions.Player.Shoot.performed += Shoot;
+        Bullet.OnBoundaryReached += Release;
     }
 
     private void OnDisable()
     {
         _playerInputActions.Player.Shoot.performed -= Shoot;
+        Bullet.OnBoundaryReached -= Release;
     }
 
     #endregion
@@ -90,14 +92,6 @@ public class Player : PoolerBase<Bullet> //TODO inject it
         bulletTransform.position = transform.position;
         bulletTransform.rotation = transform.rotation;
         bullet.transform.SetParent(_bulletPool.transform);
-        bullet.OnBoundaryReached += Release;
-    }
-
-    protected override void ReleaseSetup(Bullet obj)
-    {
-        base.ReleaseSetup(obj);
-
-        obj.OnBoundaryReached -= Release;
     }
 
     private void OnTriggerEnter2D(Collider2D col)

@@ -8,7 +8,7 @@ public class Bullet : MonoBehaviour
     //too small for a separate Scriptable Object
     [SerializeField] private float _bulletSpeed;
 
-    public Action<Bullet> OnBoundaryReached;
+    public static  event Action<Bullet> OnBoundaryReached;
 
 
     private void Awake()
