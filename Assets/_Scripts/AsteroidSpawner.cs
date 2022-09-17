@@ -6,34 +6,34 @@ using Random = UnityEngine.Random;
 
 public class AsteroidSpawner : MonoBehaviour
 {
-    [SerializeField] private float _spawnRate;
-    [SerializeField] private float _trajectoryVariance;
-    [SerializeField] private int _spawnAmount; //TODO: add range as well as to other fields
-    [SerializeField] private int _spawnDistance; //TODO: add range as well as to other fields
+    //TODO: add range as well as to other fields
+    //TODO: add range as well as to other fields
     [SerializeField] private Asteroid _asteroidPrefab;
-
     public Asteroid AsteroidPrefab => _asteroidPrefab;
 
     private void Start()
     {
-        InvokeRepeating(nameof(Spawn), _spawnRate, _spawnRate);
+        InvokeRepeating(nameof(Spawn), _asteroidPrefab.AsteroidConfig.SpawnRate,
+            _asteroidPrefab.AsteroidConfig.SpawnRate);
     }
 
     public void Spawn()
     {
-        for (int i = 0; i < _spawnAmount; i++)
+        for (int i = 0; i < _asteroidPrefab.AsteroidConfig.SpawnAmount; i++)
         {
-            Vector3 spawnDirection = Random.insideUnitCircle.normalized * _spawnDistance;
+            Vector3 spawnDirection = Random.insideUnitCircle.normalized *
+                                     _asteroidPrefab.AsteroidConfig.SpawnDistance;
             Vector3 spawnPoint = transform.position + spawnDirection;
-            float variance = Random.Range(-_trajectoryVariance, _trajectoryVariance);
+            float variance = Random.Range(-_asteroidPrefab.AsteroidConfig.TrajectoryVariance,
+                _asteroidPrefab.AsteroidConfig.TrajectoryVariance);
 
             Quaternion spawnRotation = Quaternion.AngleAxis(variance, Vector3.forward);
             //TODO: pool TODO: spawn inside a specific GO
-            Asteroid asteroid = Instantiate(_asteroidPrefab, spawnPoint, spawnRotation); 
+            Asteroid asteroid = Instantiate(_asteroidPrefab, spawnPoint, spawnRotation);
 
             asteroid.Size = Random.Range(asteroid.MinSize, asteroid.MaxSize);
-            
-            asteroid.SetTrajectory(spawnRotation * - spawnDirection );
+
+            asteroid.SetTrajectory(spawnRotation * -spawnDirection);
         }
     }
 }

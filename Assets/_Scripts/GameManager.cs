@@ -13,9 +13,9 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
-    [SerializeField] private Player _player;
+    [FormerlySerializedAs("_player")] [SerializeField] private Player _playerPrefab;
 
-    [SerializeField] private ParticleSystem _explosion;
+    [FormerlySerializedAs("_explosion")] [SerializeField] private ParticleSystem _explosionPrefab;
 
     //TODO: Transfer lives into the player
 
@@ -33,15 +33,15 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        _currentLives = _player.PlayerConfig.MaxLives;
-        _player = Instantiate(_player);
-        _explosion = Instantiate(_explosion);
+        _currentLives = _playerPrefab.PlayerConfig.MaxLives;
+        _playerPrefab = Instantiate(_playerPrefab);
+        _explosionPrefab = Instantiate(_explosionPrefab);
     }
 
     public void PlayerDied() //TODO:Make it an event
     {
-        _explosion.transform.position = _player.transform.position;
-        _explosion.Play();
+        _explosionPrefab.transform.position = _playerPrefab.transform.position;
+        _explosionPrefab.Play();
 
         _currentLives--;
 
@@ -52,26 +52,26 @@ public class GameManager : MonoBehaviour
     private void AsteroidDestroyed(Asteroid asteroid) //TODO:Make it an event
     {
         print("AsteroidDestroyed");
-        _explosion.transform.position = asteroid.transform.position;
-        _explosion.Play();
+        _explosionPrefab.transform.position = asteroid.transform.position;
+        _explosionPrefab.Play();
         _score++;
     }
 
     private void GameOver()
     {
         print("GameOver");
-        _currentLives = _player.PlayerConfig.MaxLives;
+        _currentLives = _playerPrefab.PlayerConfig.MaxLives;
         _score = 0;
         StartCoroutine(Respawn());
     }
 
     private IEnumerator Respawn()
     {
-        yield return new WaitForSeconds(_player.PlayerConfig.RespawnTime);
-        _player.transform.position = Vector3.zero;
-        var boxCollider2D = _player.GetComponent<BoxCollider2D>();
+        yield return new WaitForSeconds(_playerPrefab.PlayerConfig.RespawnTime);
+        _playerPrefab.transform.position = Vector3.zero;
+        var boxCollider2D = _playerPrefab.GetComponent<BoxCollider2D>();
         //TODO: Impplement invincibility here
-        _player.gameObject.SetActive(true);
-        yield return new WaitForSeconds(_player.PlayerConfig.TimeOfInvincibility);
+        _playerPrefab.gameObject.SetActive(true);
+        yield return new WaitForSeconds(_playerPrefab.PlayerConfig.TimeOfInvincibility);
     }
 }
