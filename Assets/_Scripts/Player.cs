@@ -5,18 +5,22 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 
+
+[RequireComponent(typeof(Rigidbody2D))]
 public class Player : PoolerBase<Bullet> //TODO inject it
 {
     private PlayerInputActions _playerInputActions; //TODO transfer into DI
     private bool _thrusting;
     private float _turnDirection;
-    [SerializeField] private Rigidbody2D _rigidbody2D;
-    [SerializeField] private float _movementSpeed; //TODO make it a SO model
-    [SerializeField] private float _turnSpeed;
-    [FormerlySerializedAs("_bullet")] [SerializeField] private Bullet _bulletPrefab;
+    private Rigidbody2D _rigidbody2D;
+    [SerializeField] private Bullet _bulletPrefab;
 
     [SerializeField] [Tooltip("That's where bullets are placed")]
-    private GameObject _bulletPool;
+    private GameObject _bulletPool; //TODO: Instantiate it in real time 
+
+    [SerializeField] private PlayerConfig _playerConfig;
+
+    public PlayerConfig PlayerConfig => _playerConfig;
 
     #region private properties
 
@@ -32,6 +36,7 @@ public class Player : PoolerBase<Bullet> //TODO inject it
         _playerInputActions = new PlayerInputActions();
         _playerInputActions.Enable();
 
+        _rigidbody2D = GetComponent<Rigidbody2D>();
         InitPool(_bulletPrefab);
     }
 
@@ -58,12 +63,12 @@ public class Player : PoolerBase<Bullet> //TODO inject it
     private void Turn()
     {
         var readVector2PlayerMovement = _playerInputActions.Player.Movement.ReadValue<Vector2>();
-        _rigidbody2D.AddTorque(-readVector2PlayerMovement.x * _turnSpeed);
+        _rigidbody2D.AddTorque(-readVector2PlayerMovement.x * _playerConfig.TurnSpeed);
     }
 
     private void Movement()
     {
-        _rigidbody2D.AddForce(TransformUp * _movementSpeed);
+        _rigidbody2D.AddForce(TransformUp * _playerConfig.MovementSpeed);
     }
 
 
