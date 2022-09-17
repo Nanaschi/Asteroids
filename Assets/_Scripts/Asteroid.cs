@@ -73,6 +73,6 @@ public class Asteroid : MonoBehaviour
 
         splitAsteroid.Size = Size * _splitCircleOffset;
 
-        splitAsteroid.SetTrajectory(Random.insideUnitCircle.normalized);
+        splitAsteroid.SetTrajectory(Random.insideUnitCircle.normalized * _speed);
     }
 }

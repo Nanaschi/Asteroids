@@ -92,4 +92,19 @@ public class Player : PoolerBase<Bullet> //TODO inject it
 
         obj.OnBoundaryReached -= Release;
     }
+
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.GetComponent<Asteroid>())
+        {
+            _rigidbody2D.velocity = Vector3.zero;
+            _rigidbody2D.angularVelocity = 0;
+            
+            gameObject.SetActive(false);
+            
+            //TODO: transform into event OnAsteroidCollided
+            FindObjectOfType<GameManager>().PlayerDied(); //TODO: Change into DI
+            
+        }
+    }
 }

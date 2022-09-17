@@ -26,7 +26,8 @@ public class AsteroidSpawner : MonoBehaviour
             float variance = Random.Range(-_trajectoryVariance, _trajectoryVariance);
 
             Quaternion spawnRotation = Quaternion.AngleAxis(variance, Vector3.forward);
-            Asteroid asteroid = Instantiate(_asteroidPrefab, spawnPoint, spawnRotation);
+            //TODO: pool TODO: spawn inside a specific GO
+            Asteroid asteroid = Instantiate(_asteroidPrefab, spawnPoint, spawnRotation); 
 
             asteroid.Size = Random.Range(asteroid.MinSize, asteroid.MaxSize);
             
