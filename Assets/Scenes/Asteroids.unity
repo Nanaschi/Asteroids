@@ -681,7 +681,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 427552093}
+  _explosion: {fileID: 2020298333}
   _lives: 3
+  _score: 0
   _respawnTime: 3
   _timeOfInvincibility: 3
 --- !u!4 &1274575487

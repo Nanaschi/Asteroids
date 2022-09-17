@@ -60,6 +60,8 @@ public class Asteroid : MonoBehaviour
                 CreateSplit();
             }
 
+            //TODO: Change to OnAsteroidDestroyed
+            FindObjectOfType<GameManager>().AsteroidDestroyed(this);
             Destroy(gameObject); //TODO: pool
         }
     }
