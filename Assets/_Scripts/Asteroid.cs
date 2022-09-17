@@ -12,8 +12,6 @@ public class Asteroid : MonoBehaviour
 
     private SpriteRenderer _spriteRenderer;
     private Rigidbody2D _rigidbody2D;
-    [SerializeField] private Sprite[] _sprite;
-
     [SerializeField] private AsteroidConfig _asteroidConfig;
 
     public AsteroidConfig AsteroidConfig => _asteroidConfig;
@@ -38,7 +36,9 @@ public class Asteroid : MonoBehaviour
 
     private void Start()
     {
-        _spriteRenderer.sprite = _sprite[Random.Range(0, _sprite.Length)];
+        _spriteRenderer.sprite =
+            _asteroidConfig.SpriteVariations[
+                Random.Range(0, _asteroidConfig.SpriteVariations.Length)];
 
         transform.eulerAngles = new Vector3(0, 0, Random.value * FullCircle);
 

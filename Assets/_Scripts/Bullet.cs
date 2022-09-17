@@ -1,14 +1,21 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class Bullet : MonoBehaviour
 {
-    [SerializeField] private Rigidbody2D _rigidbody2D;
-    [SerializeField] private float _bulletSpeed; //TODO: put into model
+    private Rigidbody2D _rigidbody2D;
+    //too small for a separate Scriptable Object
+    [SerializeField] private float _bulletSpeed;
 
     public Action<Bullet> OnBoundaryReached;
+
+
+    private void Awake()
+    {
+        _rigidbody2D = GetComponent<Rigidbody2D>();
+    }
+
     public void Project(Vector2 objectDirection)
     {
         _rigidbody2D.AddForce(objectDirection * _bulletSpeed);

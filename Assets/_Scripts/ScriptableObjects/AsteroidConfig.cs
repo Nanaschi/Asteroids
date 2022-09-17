@@ -8,6 +8,10 @@ public class AsteroidConfig : ScriptableObject
 {
     [SerializeField] private AsteroidModel _asteroidModel;
 
+    [SerializeField] private Sprite[] _spriteVariations;
+
+    public Sprite[] SpriteVariations => _spriteVariations;
+
     public float SpawnRate => _asteroidModel.SpawnRate;
 
     public float TrajectoryVariance => _asteroidModel.TrajectoryVariance;

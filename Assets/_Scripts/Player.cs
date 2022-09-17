@@ -15,10 +15,8 @@ public class Player : PoolerBase<Bullet> //TODO inject it
     private Rigidbody2D _rigidbody2D;
     [SerializeField] private Bullet _bulletPrefab;
 
-    [SerializeField] [Tooltip("That's where bullets are placed")]
-    private GameObject _bulletPool; //TODO: Instantiate it in real time 
-
     [SerializeField] private PlayerConfig _playerConfig;
+    private GameObject _bulletPool;
 
     public PlayerConfig PlayerConfig => _playerConfig;
 
@@ -37,8 +35,10 @@ public class Player : PoolerBase<Bullet> //TODO inject it
     {
         _playerInputActions = new PlayerInputActions();
         _playerInputActions.Enable();
-
         _rigidbody2D = GetComponent<Rigidbody2D>();
+
+        _bulletPool = new GameObject(nameof(_bulletPool));
+        _bulletPool.transform.SetParent(transform);
         InitPool(_bulletPrefab);
     }
 
