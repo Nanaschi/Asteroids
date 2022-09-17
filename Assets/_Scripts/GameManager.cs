@@ -22,11 +22,13 @@ public class GameManager : MonoBehaviour
     private void OnEnable()
     {
         Asteroid.OnAsteroidDestroyed += AsteroidDestroyed;
+        Player.OnAsteroidCollided += PlayerDied;
     }
 
     private void OnDisable()
     {
         Asteroid.OnAsteroidDestroyed -= AsteroidDestroyed;
+        Player.OnAsteroidCollided -= PlayerDied;
     }
 
     private void Awake()

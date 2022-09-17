@@ -21,7 +21,7 @@ public class Asteroid : MonoBehaviour
     [SerializeField] private Rigidbody2D _rigidbody2D;
     [SerializeField] private Sprite[] _sprite;
 
-    public static Action<Asteroid> OnAsteroidDestroyed;
+    public static event Action<Asteroid> OnAsteroidDestroyed;
 
     public float Size
     {
@@ -61,8 +61,7 @@ public class Asteroid : MonoBehaviour
                 CreateSplit();
             }
 
-            //TODO: Change to OnAsteroidDestroyed
-            /*FindObjectOfType<GameManager>().AsteroidDestroyed(this);*/
+
             OnAsteroidDestroyed?.Invoke(this);
             Destroy(gameObject); //TODO: pool
         }

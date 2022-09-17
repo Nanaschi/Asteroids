@@ -22,6 +22,8 @@ public class Player : PoolerBase<Bullet> //TODO inject it
 
     public PlayerConfig PlayerConfig => _playerConfig;
 
+    public static event Action OnAsteroidCollided;
+
     #region private properties
 
     private Vector3 TransformUp => transform.up;
@@ -104,12 +106,10 @@ public class Player : PoolerBase<Bullet> //TODO inject it
         {
             _rigidbody2D.velocity = Vector3.zero;
             _rigidbody2D.angularVelocity = 0;
-            
+
             gameObject.SetActive(false);
-            
-            //TODO: transform into event OnAsteroidCollided
-            FindObjectOfType<GameManager>().PlayerDied(); //TODO: Change into DI
-            
+
+            OnAsteroidCollided?.Invoke();
         }
     }
 }
