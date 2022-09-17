@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -14,6 +15,7 @@ public class Asteroid : MonoBehaviour
 
     [SerializeField] private float _minSize = .5f;
     [SerializeField] private float _maxSize = 1.5f;
+    [SerializeField] private float _splitCircleOffset;
 
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private Rigidbody2D _rigidbody2D;
@@ -44,6 +46,33 @@ public class Asteroid : MonoBehaviour
     public void SetTrajectory(Vector2 direction)
     {
         _rigidbody2D.AddForce(direction * _speed);
-        Destroy(gameObject, 30f);//TODO: change to pool 
+        Destroy(gameObject, 30f); //TODO: change to pool 
+    }
+
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        print("Collided");
+        if (col.GetComponent<Bullet>())
+        {
+            if ((_size * .5f) >= _minSize)
+            {
+                CreateSplit();
+                CreateSplit();
+            }
+
+            Destroy(gameObject); //TODO: pool
+        }
+    }
+
+    private void CreateSplit()
+    {
+        Vector2 position = transform.position;
+        position += Random.insideUnitCircle * _splitCircleOffset;
+
+        Asteroid splitAsteroid = Instantiate(this, position, transform.rotation); //TODO: pool
+
+        splitAsteroid.Size = Size * _splitCircleOffset;
+
+        splitAsteroid.SetTrajectory(Random.insideUnitCircle.normalized);
     }
 }

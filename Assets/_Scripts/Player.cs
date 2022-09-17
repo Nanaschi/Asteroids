@@ -83,13 +83,13 @@ public class Player : PoolerBase<Bullet> //TODO inject it
         bulletTransform.position = transform.position;
         bulletTransform.rotation = transform.rotation;
         bullet.transform.SetParent(_bulletPool.transform);
-        bullet.OnBulletCollided += Release;
+        bullet.OnBoundaryReached += Release;
     }
 
     protected override void ReleaseSetup(Bullet obj)
     {
         base.ReleaseSetup(obj);
 
-        obj.OnBulletCollided -= Release;
+        obj.OnBoundaryReached -= Release;
     }
 }
