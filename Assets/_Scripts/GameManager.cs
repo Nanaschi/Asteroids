@@ -19,10 +19,21 @@ public class GameManager : MonoBehaviour
 
     //TODO: Transfer lives into the player
 
+    private void OnEnable()
+    {
+        Asteroid.OnAsteroidDestroyed += AsteroidDestroyed;
+    }
+
+    private void OnDisable()
+    {
+        Asteroid.OnAsteroidDestroyed -= AsteroidDestroyed;
+    }
 
     private void Awake()
     {
         _currentLives = _player.PlayerConfig.MaxLives;
+        _player = Instantiate(_player);
+        _explosion = Instantiate(_explosion);
     }
 
     public void PlayerDied() //TODO:Make it an event
@@ -36,8 +47,9 @@ public class GameManager : MonoBehaviour
         else StartCoroutine(Respawn());
     }
 
-    public void AsteroidDestroyed(Asteroid asteroid) //TODO:Make it an event
+    private void AsteroidDestroyed(Asteroid asteroid) //TODO:Make it an event
     {
+        print("AsteroidDestroyed");
         _explosion.transform.position = asteroid.transform.position;
         _explosion.Play();
         _score++;

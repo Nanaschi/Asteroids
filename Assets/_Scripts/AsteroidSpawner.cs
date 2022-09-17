@@ -12,6 +12,8 @@ public class AsteroidSpawner : MonoBehaviour
     [SerializeField] private int _spawnDistance; //TODO: add range as well as to other fields
     [SerializeField] private Asteroid _asteroidPrefab;
 
+    public Asteroid AsteroidPrefab => _asteroidPrefab;
+
     private void Start()
     {
         InvokeRepeating(nameof(Spawn), _spawnRate, _spawnRate);
