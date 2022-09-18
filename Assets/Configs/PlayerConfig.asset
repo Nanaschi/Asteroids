@@ -17,4 +17,4 @@ MonoBehaviour:
     _respawnTime: 3
     _timeOfInvincibility: 3
     _movementSpeed: 3
-    _turnSpeed: 0.5
+    _turnSpeed: 0.1

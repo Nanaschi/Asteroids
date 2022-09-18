@@ -132,7 +132,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.5, y: 0.5}
   m_EdgeRadius: 0
 --- !u!114 &2122149412976063899
 MonoBehaviour:
@@ -147,5 +147,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _bulletPrefab: {fileID: -3737573996569958335, guid: 762304de563e753419b288cf64e7e3e6, type: 3}
-  _bulletPool: {fileID: 0}
   _playerConfig: {fileID: 11400000, guid: d92cacf5545537a45be1afb90d5d1521, type: 2}

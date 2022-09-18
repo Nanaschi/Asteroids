@@ -22,7 +22,7 @@ public class Bullet : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.GetComponentInParent<Boundary>() || col.GetComponentInParent<Asteroid>())
+        if (col.GetComponentInParent<Boundary>() || col.GetComponent<Asteroid>())
         {
             OnBoundaryReached?.Invoke(this);
         }
