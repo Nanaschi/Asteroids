@@ -19,8 +19,14 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private ParticleSystem _explosionPrefab;
 
-    [Inject] private Player.Factory _playerFactory;
+    private Player.Factory _playerFactory;
 
+    [Inject]
+    public void InitInject(Player.Factory playerFactory)
+    {
+        _playerFactory = playerFactory;
+    }
+    
     private void OnEnable()
     {
         Asteroid.OnAsteroidDestroyed += AsteroidDestroyed;

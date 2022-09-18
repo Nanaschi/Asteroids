@@ -112,7 +112,5 @@ public class Player : PoolerBase<Bullet> //TODO inject it
         }
     }
 
-    public class Factory : PlaceholderFactory<Player>
-    {
-    }
+    public class Factory : PlaceholderFactory<Player> { }
 }
