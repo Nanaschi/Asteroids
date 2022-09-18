@@ -6,8 +6,8 @@ internal struct AsteroidModel
 {
     [SerializeField] private float _spawnRate;
     [SerializeField] private float _trajectoryVariance;
-    [SerializeField] private int _spawnAmount; //TODO: add range as well as to other fields
-    [SerializeField] private int _spawnDistance; //TODO: add range as well as to other fields
+    [SerializeField] [Range(1,10)] private int _spawnAmount;
+    [SerializeField] private int _spawnDistance;
     [SerializeField] private float _speed;
     [SerializeField] private float _minSize;
     [SerializeField] private float _maxSize;

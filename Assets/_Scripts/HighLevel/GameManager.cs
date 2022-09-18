@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
         _explosionPrefab = Instantiate(_explosionPrefab);
     }
 
-    public void PlayerDied() //TODO:Make it an event
+    private void PlayerDied() //TODO:Make it an event
     {
         _explosionPrefab.transform.position = _playerPrefab.transform.position;
         _explosionPrefab.Play();

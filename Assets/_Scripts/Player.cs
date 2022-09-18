@@ -10,7 +10,7 @@ using Zenject;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Player : PoolerBase<Bullet> //TODO inject it
 {
-    private PlayerInputActions _playerInputActions; //TODO transfer into DI
+    private PlayerInputActions _playerInputActions;
     private bool _thrusting;
     private float _turnDirection;
     private Rigidbody2D _rigidbody2D;

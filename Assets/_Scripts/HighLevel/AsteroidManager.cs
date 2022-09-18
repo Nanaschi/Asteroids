@@ -7,11 +7,16 @@ using Random = UnityEngine.Random;
 
 public class AsteroidManager : MonoBehaviour
 {
-    //TODO: add range as well as to other fields
-    //TODO: add range as well as to other fields
     [SerializeField] private Asteroid _asteroidPrefab;
     public Asteroid AsteroidPrefab => _asteroidPrefab;
-    
+
+    private GameObject _asteroidPool;
+
+    private void Awake()
+    {
+        _asteroidPool = new GameObject(nameof(_asteroidPool));
+        _asteroidPool.transform.SetParent(transform);
+    }
 
     private void Start()
     {
@@ -30,9 +35,9 @@ public class AsteroidManager : MonoBehaviour
                 _asteroidPrefab.AsteroidConfig.TrajectoryVariance);
 
             Quaternion spawnRotation = Quaternion.AngleAxis(variance, Vector3.forward);
-            //TODO: pool TODO: spawn inside a specific GO
             Asteroid asteroid = Instantiate(_asteroidPrefab, spawnPoint, spawnRotation);
 
+            asteroid.transform.SetParent(_asteroidPool.transform);
             asteroid.Size = Random.Range(asteroid.MinSize, asteroid.MaxSize);
 
             asteroid.SetTrajectory(spawnRotation * -spawnDirection);
