@@ -8,7 +8,7 @@ using Zenject;
 
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class Player : PoolerBase<Bullet> //TODO inject it
+public class Player : PoolerBase<Bullet>
 {
     private PlayerInputActions _playerInputActions;
     private bool _thrusting;

@@ -17,6 +17,7 @@ public class Asteroid : MonoBehaviour
     public AsteroidConfig AsteroidConfig => _asteroidConfig;
 
     public static event Action<Asteroid> OnAsteroidDestroyed;
+    public static event Func<Asteroid> OnAsteroidSplit;
 
     public float Size
     {
@@ -50,12 +51,16 @@ public class Asteroid : MonoBehaviour
     public void SetTrajectory(Vector2 direction)
     {
         _rigidbody2D.AddForce(direction * _asteroidConfig.Speed);
-        Destroy(gameObject, 30f); //TODO: change to pool 
+        Invoke(nameof(SelfDestruction), _asteroidConfig.SelfDestructionTime);
+    }
+
+    private void SelfDestruction()
+    {
+        OnAsteroidDestroyed?.Invoke(this);
     }
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        print("Collided");
         if (col.GetComponent<Bullet>())
         {
             if ((_size * .5f) >= _asteroidConfig.MinSize)
@@ -66,7 +71,6 @@ public class Asteroid : MonoBehaviour
 
 
             OnAsteroidDestroyed?.Invoke(this);
-            Destroy(gameObject); //TODO: pool
         }
     }
 
@@ -75,7 +79,10 @@ public class Asteroid : MonoBehaviour
         Vector2 position = transform.position;
         position += Random.insideUnitCircle * _asteroidConfig.SplitCircleOffset;
 
-        Asteroid splitAsteroid = Instantiate(this, position, transform.rotation); //TODO: pool
+
+        var splitAsteroid = OnAsteroidSplit?.Invoke();
+        splitAsteroid.transform.position = position;
+        splitAsteroid.transform.rotation = transform.rotation;
 
         splitAsteroid.Size = Size * _asteroidConfig.SplitCircleOffset;
 

@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
         _explosionPrefab = Instantiate(_explosionPrefab);
     }
 
-    private void PlayerDied() //TODO:Make it an event
+    private void PlayerDied()
     {
         _explosionPrefab.transform.position = _playerPrefab.transform.position;
         _explosionPrefab.Play();
@@ -59,7 +59,7 @@ public class GameManager : MonoBehaviour
         else StartCoroutine(Respawn());
     }
 
-    private void AsteroidDestroyed(Asteroid asteroid) //TODO:Make it an event
+    private void AsteroidDestroyed(Asteroid asteroid)
     {
         print("AsteroidDestroyed");
         _explosionPrefab.transform.position = asteroid.transform.position;

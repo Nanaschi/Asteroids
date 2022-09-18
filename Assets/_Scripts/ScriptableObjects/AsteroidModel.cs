@@ -12,6 +12,10 @@ internal struct AsteroidModel
     [SerializeField] private float _minSize;
     [SerializeField] private float _maxSize;
     [SerializeField] private float _splitCircleOffset;
+    [SerializeField] private float _selfDestructionTime;
+
+    public float SelfDestructionTime => _selfDestructionTime;
+
     public float SpawnRate => _spawnRate;
 
     public float TrajectoryVariance => _trajectoryVariance;

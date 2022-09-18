@@ -27,4 +27,6 @@ public class AsteroidConfig : ScriptableObject
     public float MaxSize => _asteroidModel.MaxSize;
 
     public float SplitCircleOffset => _asteroidModel.SplitCircleOffset;
+    public float SelfDestructionTime => _asteroidModel.SelfDestructionTime;
+    
 }

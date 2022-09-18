@@ -9,7 +9,7 @@ public struct PlayerModel
     [SerializeField] private int _respawnTime;
 
     [SerializeField] private int _timeOfInvincibility;
-    [SerializeField] private float _movementSpeed; //TODO make it a SO model
+    [SerializeField] private float _movementSpeed;
     [SerializeField] private float _turnSpeed;
 
     public float MovementSpeed => _movementSpeed;
