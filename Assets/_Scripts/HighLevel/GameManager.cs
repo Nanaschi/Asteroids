@@ -116,8 +116,6 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(_playerPrefab.PlayerConfig.RespawnTime);
         _playerPrefab.transform.position = Vector3.zero;
-        var boxCollider2D = _playerPrefab.GetComponent<BoxCollider2D>();
-        //TODO: Impplement invincibility here
         _playerPrefab.gameObject.SetActive(true);
         yield return new WaitForSeconds(_playerPrefab.PlayerConfig.TimeOfInvincibility);
     }
