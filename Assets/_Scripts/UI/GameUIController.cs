@@ -14,13 +14,20 @@ namespace _Scripts
             _gameUIView = gameUIView;
             GameManager.OnCurrentLivesChanged += UpdateLives;
             GameManager.OnScoreChanged += UpdateScore;
-            Player.OnTransformChanged += UpdateTransform;
+            Player.OnTransformChanged += UpdatePositionCoordinates;
+            Player.OnTransformChanged += UpdateRotationCoordinates;
         }
 
-        private void UpdateTransform(Vector2 vector2)
+        private void UpdateRotationCoordinates(Transform transform)
         {
-            _gameUIView.XPlayerTransform.text = Math.Round(vector2.x, 2).ToString();
-            _gameUIView.YPlayerTransform.text = Math.Round(vector2.y, 2).ToString();
+            _gameUIView.PlayerRotationAngle.text =
+                Math.Round(transform.rotation.eulerAngles.z, 1).ToString();
+        }
+
+        private void UpdatePositionCoordinates(Transform transform)
+        {
+            _gameUIView.XPlayerTransform.text = Math.Round(transform.position.x, 2).ToString();
+            _gameUIView.YPlayerTransform.text = Math.Round(transform.position.y, 2).ToString();
         }
 
         private void UpdateScore(int updatedScore)

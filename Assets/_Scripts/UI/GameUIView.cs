@@ -9,6 +9,13 @@ public class GameUIView : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _currentScore;
     [SerializeField] private TextMeshProUGUI _xPlayerTransform;
     [SerializeField] private TextMeshProUGUI _yPlayerTransform;
+    [SerializeField] private TextMeshProUGUI _playerRotationAngle;
+
+    public TextMeshProUGUI PlayerRotationAngle
+    {
+        get => _playerRotationAngle;
+        set => _playerRotationAngle = value;
+    }
 
     public TextMeshProUGUI XPlayerTransform
     {
