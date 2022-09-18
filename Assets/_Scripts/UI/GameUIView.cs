@@ -10,6 +10,13 @@ public class GameUIView : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _xPlayerTransform;
     [SerializeField] private TextMeshProUGUI _yPlayerTransform;
     [SerializeField] private TextMeshProUGUI _playerRotationAngle;
+    [SerializeField] private TextMeshProUGUI _playerVelocity;
+
+    public TextMeshProUGUI PlayerVelocity
+    {
+        get => _playerVelocity;
+        set => _playerVelocity = value;
+    }
 
     public TextMeshProUGUI PlayerRotationAngle
     {

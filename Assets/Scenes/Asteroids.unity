@@ -213,7 +213,7 @@ GameObject:
   - component: {fileID: 261367557}
   - component: {fileID: 261367558}
   m_Layer: 5
-  m_Name: Score (1)
+  m_Name: Rotation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1144,7 +1144,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 150, y: 40}
+  m_SizeDelta: {x: 205.9188, y: 40}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &868888196
 MonoBehaviour:
@@ -1490,7 +1490,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 185.4686, y: 50}
+  m_SizeDelta: {x: 278.6683, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1121015225
 MonoBehaviour:
@@ -1512,7 +1512,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Score:'
+  m_text: 'Velocity:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8c75bbabc8b93cb42bc116cdd3cd7611, type: 2}
   m_sharedMaterial: {fileID: 8367640388440513206, guid: 8c75bbabc8b93cb42bc116cdd3cd7611, type: 2}
@@ -1778,6 +1778,7 @@ MonoBehaviour:
   _xPlayerTransform: {fileID: 868888196}
   _yPlayerTransform: {fileID: 442308520}
   _playerRotationAngle: {fileID: 496952474}
+  _playerVelocity: {fileID: 1509365438}
 --- !u!1 &1331770030
 GameObject:
   m_ObjectHideFlags: 0
@@ -2039,7 +2040,7 @@ GameObject:
   - component: {fileID: 1509365439}
   - component: {fileID: 1509365438}
   m_Layer: 5
-  m_Name: CurrentScore
+  m_Name: PlayerVelocity
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2173,7 +2174,7 @@ GameObject:
   - component: {fileID: 1573647505}
   - component: {fileID: 1573647506}
   m_Layer: 5
-  m_Name: Score
+  m_Name: Velocity
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

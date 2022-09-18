@@ -23,6 +23,7 @@ public class Player : PoolerBase<Bullet>
 
     public static event Action OnAsteroidCollided;
     public static event Action<Transform> OnTransformChanged;
+    public static event Action<Rigidbody2D> OnActiveVelocity;
 
     #region private properties
 
@@ -68,7 +69,11 @@ public class Player : PoolerBase<Bullet>
     {
         if (MovingForward) Movement();
         if (Turning) Turn();
-        if (transform.hasChanged) OnTransformChanged?.Invoke(transform);
+        if (transform.hasChanged)
+        {
+            OnTransformChanged?.Invoke(transform);
+            OnActiveVelocity?.Invoke(_rigidbody2D);
+        }
     }
 
     private void Turn()
@@ -114,5 +119,7 @@ public class Player : PoolerBase<Bullet>
         }
     }
 
-    public class Factory : PlaceholderFactory<Player> { }
+    public class Factory : PlaceholderFactory<Player>
+    {
+    }
 }

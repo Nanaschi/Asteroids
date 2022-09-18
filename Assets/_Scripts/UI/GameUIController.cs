@@ -16,6 +16,13 @@ namespace _Scripts
             GameManager.OnScoreChanged += UpdateScore;
             Player.OnTransformChanged += UpdatePositionCoordinates;
             Player.OnTransformChanged += UpdateRotationCoordinates;
+            Player.OnActiveVelocity += UpdateVelocity;
+        }
+
+        private void UpdateVelocity(Rigidbody2D rigidbody2D)
+        {
+            _gameUIView.PlayerVelocity.text = 
+                Math.Round(rigidbody2D.velocity.magnitude, 2).ToString();
         }
 
         private void UpdateRotationCoordinates(Transform transform)
