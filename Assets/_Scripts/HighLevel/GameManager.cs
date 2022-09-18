@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using _Scripts;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Zenject;
@@ -10,8 +11,34 @@ public class GameManager : MonoBehaviour
 {
     #region DebugMode fields
 
+    
+
+    public static event Action<int> OnCurrentLivesChanged;
+    public static event Action<int> OnScoreChanged;
+
     private int _currentLives;
+    private int CurrentLives
+    {
+        get => _currentLives;
+        set
+        {
+            _currentLives = value;
+            OnCurrentLivesChanged?.Invoke(_currentLives);
+        }
+    }
+
+
     private int _score;
+
+    private int Score
+    {
+        get => _score;
+        set
+        {
+            _score = value;
+            OnScoreChanged?.Invoke(_score);
+        } 
+    }
 
     #endregion
 
@@ -20,10 +47,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private ParticleSystem _explosionPrefab;
 
     private Player.Factory _playerFactory;
+    private GameUIView _gameUIView;
 
     [Inject]
-    public void InitInject(Player.Factory playerFactory)
+    public void InitInject(Player.Factory playerFactory, GameUIView gameUIView)
     {
+        _gameUIView = gameUIView;
         _playerFactory = playerFactory;
     }
     
@@ -41,8 +70,9 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        Score = 0;
         _playerPrefab = _playerFactory.Create();
-        _currentLives = _playerPrefab.PlayerConfig.MaxLives;
+        CurrentLives = _playerPrefab.PlayerConfig.MaxLives;
 
 
         _explosionPrefab = Instantiate(_explosionPrefab);
@@ -53,9 +83,9 @@ public class GameManager : MonoBehaviour
         _explosionPrefab.transform.position = _playerPrefab.transform.position;
         _explosionPrefab.Play();
 
-        _currentLives--;
+        CurrentLives--;
 
-        if (_currentLives <= 0) GameOver();
+        if (CurrentLives <= 0) GameOver();
         else StartCoroutine(Respawn());
     }
 
@@ -64,17 +94,20 @@ public class GameManager : MonoBehaviour
         print("AsteroidDestroyed");
         _explosionPrefab.transform.position = asteroid.transform.position;
         _explosionPrefab.Play();
-        _score++;
+        Score++;
     }
 
     private void GameOver()
     {
         print("GameOver");
-        _currentLives = _playerPrefab.PlayerConfig.MaxLives;
-        _score = 0;
+        CurrentLives = _playerPrefab.PlayerConfig.MaxLives;
+        Score = 0;
         StartCoroutine(Respawn());
+        
+        
     }
 
+    
     private IEnumerator Respawn()
     {
         yield return new WaitForSeconds(_playerPrefab.PlayerConfig.RespawnTime);
