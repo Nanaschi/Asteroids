@@ -7,6 +7,20 @@ public class GameUIView : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _currentLives;
     [SerializeField] private TextMeshProUGUI _currentScore;
+    [SerializeField] private TextMeshProUGUI _xPlayerTransform;
+    [SerializeField] private TextMeshProUGUI _yPlayerTransform;
+
+    public TextMeshProUGUI XPlayerTransform
+    {
+        get => _xPlayerTransform;
+        set => _xPlayerTransform = value;
+    }
+
+    public TextMeshProUGUI YPlayerTransform
+    {
+        get => _yPlayerTransform;
+        set => _yPlayerTransform = value;
+    }
 
     public TextMeshProUGUI CurrentLives
     {

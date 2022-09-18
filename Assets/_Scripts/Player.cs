@@ -22,6 +22,7 @@ public class Player : PoolerBase<Bullet>
     public PlayerConfig PlayerConfig => _playerConfig;
 
     public static event Action OnAsteroidCollided;
+    public static event Action<Vector2> OnTransformChanged;
 
     #region private properties
 
@@ -67,6 +68,7 @@ public class Player : PoolerBase<Bullet>
     {
         if (MovingForward) Movement();
         if (Turning) Turn();
+        if (transform.hasChanged) OnTransformChanged?.Invoke(transform.position);
     }
 
     private void Turn()

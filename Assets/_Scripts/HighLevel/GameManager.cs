@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using _Scripts;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using Zenject;
 
@@ -100,11 +101,14 @@ public class GameManager : MonoBehaviour
     private void GameOver()
     {
         print("GameOver");
-        CurrentLives = _playerPrefab.PlayerConfig.MaxLives;
-        Score = 0;
-        StartCoroutine(Respawn());
+        Invoke(nameof(ReloadCurrentScene),_playerPrefab.PlayerConfig.RespawnTime);
         
         
+    }
+
+    private void ReloadCurrentScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     
