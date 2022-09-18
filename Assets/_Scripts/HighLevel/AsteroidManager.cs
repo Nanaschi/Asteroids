@@ -2,14 +2,16 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 using Random = UnityEngine.Random;
 
-public class AsteroidSpawner : MonoBehaviour
+public class AsteroidManager : MonoBehaviour
 {
     //TODO: add range as well as to other fields
     //TODO: add range as well as to other fields
     [SerializeField] private Asteroid _asteroidPrefab;
     public Asteroid AsteroidPrefab => _asteroidPrefab;
+    
 
     private void Start()
     {

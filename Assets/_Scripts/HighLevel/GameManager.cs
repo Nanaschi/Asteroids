@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Zenject;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,11 +15,11 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
-    [FormerlySerializedAs("_player")] [SerializeField] private Player _playerPrefab;
+    private Player _playerPrefab;
 
-    [FormerlySerializedAs("_explosion")] [SerializeField] private ParticleSystem _explosionPrefab;
+    [SerializeField] private ParticleSystem _explosionPrefab;
 
-    //TODO: Transfer lives into the player
+    [Inject] private Player.Factory _playerFactory;
 
     private void OnEnable()
     {
@@ -33,8 +35,10 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        _playerPrefab = _playerFactory.Create();
         _currentLives = _playerPrefab.PlayerConfig.MaxLives;
-        _playerPrefab = Instantiate(_playerPrefab);
+
+
         _explosionPrefab = Instantiate(_explosionPrefab);
     }
 

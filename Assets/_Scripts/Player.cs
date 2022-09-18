@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
+using Zenject;
 
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -31,10 +32,14 @@ public class Player : PoolerBase<Bullet> //TODO inject it
 
     #endregion
 
+    [Inject]
+    public void InitInject(PlayerInputActions playerInputActions)
+    {
+        _playerInputActions = playerInputActions;
+    }
+
     private void Awake()
     {
-        _playerInputActions = new PlayerInputActions(); //TODO: add it into DI
-        _playerInputActions.Enable();
         _rigidbody2D = GetComponent<Rigidbody2D>();
 
         _bulletPool = new GameObject(nameof(_bulletPool));
@@ -105,5 +110,9 @@ public class Player : PoolerBase<Bullet> //TODO inject it
 
             OnAsteroidCollided?.Invoke();
         }
+    }
+
+    public class Factory : PlaceholderFactory<Player>
+    {
     }
 }
