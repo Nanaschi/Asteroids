@@ -1,10 +1,6 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 using Zenject;
 
 
@@ -16,7 +12,7 @@ public class Player : PoolerBase<Projectile>
     private float _turnDirection;
     private Rigidbody2D _rigidbody2D;
 
-    [SerializeField] private Projectile projectilePrefab;
+    [SerializeField] private Projectile _bulletPrefab;
 
     [SerializeField] private Projectile _laserPrefab;
 
@@ -76,7 +72,7 @@ public class Player : PoolerBase<Projectile>
 
     private void InitLaserPool()
     {
-        InitPool(ref _bulletPool, projectilePrefab);
+        InitPool(ref _bulletPool, _bulletPrefab);
     }
 
     private void InitBulletPool()
@@ -95,13 +91,15 @@ public class Player : PoolerBase<Projectile>
 
     private void OnEnable()
     {
-        _playerInputActions.Player.Shoot.performed += Shoot;
+        _playerInputActions.Player.ShootPrimary.performed += ShootPrimary;
+        _playerInputActions.Player.ShootSecondary.performed += ShootSecondary;
         Projectile.OnBoundaryReached += Release;
     }
 
     private void OnDisable()
     {
-        _playerInputActions.Player.Shoot.performed -= Shoot;
+        _playerInputActions.Player.ShootPrimary.performed -= ShootPrimary;
+        _playerInputActions.Player.ShootSecondary.performed -= ShootSecondary;
         Projectile.OnBoundaryReached -= Release;
     }
 
@@ -125,16 +123,15 @@ public class Player : PoolerBase<Projectile>
 
     private void FillLaserBar()
     {
-        if(CurrentLaserCharges >= _maximumLaserCharges) return;
+        if (CurrentLaserCharges >= _maximumLaserCharges) return;
         _currentLaserBarFill += _fillPercent;
         var barPercent = OnLaserFilled?.Invoke(_currentLaserBarFill);
         if (barPercent >= 1)
         {
             CurrentLaserCharges++;
-            if(CurrentLaserCharges >= _maximumLaserCharges) return;
+            if (CurrentLaserCharges >= _maximumLaserCharges) return;
             _currentLaserBarFill = 0;
             OnLaserFilled?.Invoke(_currentLaserBarFill);
-           
         }
     }
 
@@ -150,13 +147,21 @@ public class Player : PoolerBase<Projectile>
     }
 
 
-    private void Shoot(InputAction.CallbackContext callbackContext)
+    private void ShootPrimary(InputAction.CallbackContext callbackContext)
+    {
+        var bullet = Get();
+
+        bullet.Project(TransformUp); //TODO: Here implement the base class or interface
+    }
+
+    private void ShootSecondary(InputAction.CallbackContext callbackContext)
     {
         var bullet = Get();
 
         ReduceCharges();
-        bullet.Project(TransformUp);
+        bullet.Project(TransformUp); //TODO: Here implement the base class or interface
     }
+
 
     private void ReduceCharges()
     {

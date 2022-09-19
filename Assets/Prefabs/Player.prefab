@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2122149412976063903}
   - component: {fileID: 2122149412976063898}
   - component: {fileID: 2122149412976063901}
-  - component: {fileID: 2122149412976063899}
+  - component: {fileID: 6924173128206905337}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -134,7 +134,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.5, y: 0.5}
   m_EdgeRadius: 0
---- !u!114 &2122149412976063899
+--- !u!114 &6924173128206905337
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -146,9 +146,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa6a00d5d7905b142934e5c16e624ece, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: -3737573996569958335, guid: 762304de563e753419b288cf64e7e3e6, type: 3}
-  _laserPrefab: {fileID: 4309503351288673540, guid: 941186aedf48f0a498416ed2e2a75451, type: 3}
+  _bulletPrefab: {fileID: 130447629619974274, guid: 762304de563e753419b288cf64e7e3e6, type: 3}
+  _laserPrefab: {fileID: 7453876409008230793, guid: 941186aedf48f0a498416ed2e2a75451, type: 3}
   _playerConfig: {fileID: 11400000, guid: d92cacf5545537a45be1afb90d5d1521, type: 2}
-  _fillSpeed: 0.2
-  _fillPercent: 0.3
+  _fillSpeed: 0.3
+  _fillPercent: 0.2
   _maximumLaserCharges: 3
