@@ -2,16 +2,23 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 public class UFO : MonoBehaviour
 {
     [SerializeField] private Player _player;
+
+    public Player Player
+    {
+        get => _player;
+        set => _player = value;
+    }
+
     [SerializeField] private float moveSpeed;
 
-    // Start is called before the first frame update
-    void Start()
+    public void Construct(Player player)
     {
-        _player = FindObjectOfType<Player>();
+        _player = player;
     }
 
     private void Update()

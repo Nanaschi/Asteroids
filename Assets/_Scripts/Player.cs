@@ -226,9 +226,14 @@ public class Player : DoublePoolerBase<Projectile, Projectile>
 
     public class Factory : PlaceholderFactory<Player>
     {
+        private Player _currentPlayer;
+
+        public Player CurrentPlayer => _currentPlayer;
+
         public override Player Create()
         {
             var player = base.Create();
+            _currentPlayer = player;
             player.CurrentLaserCharges = 0;
             return player;
         }

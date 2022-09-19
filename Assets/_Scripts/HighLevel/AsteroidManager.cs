@@ -12,7 +12,15 @@ public class AsteroidManager : DoublePoolerBase<Asteroid, UFO>
     public Asteroid AsteroidPrefab => _asteroidPrefab;
 
     private GameObject _asteroidPool;
+    private Player.Factory _factory;
 
+
+    [Inject]
+    private void InitiInject(Player.Factory factory)
+    {
+        _factory = factory;
+    }
+    
     private void Awake()
     {
         _asteroidPool = new GameObject(nameof(_asteroidPool));
@@ -64,15 +72,14 @@ public class AsteroidManager : DoublePoolerBase<Asteroid, UFO>
             asteroid.Size = Random.Range(asteroid.MinSize, asteroid.MaxSize);
 
             asteroid.SetTrajectory(spawnRotation * -spawnDirection);
-            
-            
-            UFO  ufo= Get2();
 
+
+            UFO ufo = Get2();
+            ufo.Construct(_factory.CurrentPlayer);
             ufo.transform.position = spawnPoint;
             ufo.transform.rotation = spawnRotation;
 
             ufo.transform.SetParent(_asteroidPool.transform);
-
         }
     }
 }

@@ -16,6 +16,7 @@ public class SceneInstaller : MonoInstaller
 
         playerInputActions.Enable();
         Container.BindFactory<Player, Player.Factory>().FromComponentInNewPrefab(_playerPrefab);
+        Container.Bind<Player>().FromInstance(_playerPrefab).AsSingle().NonLazy();
 
         Container.Bind<GameUIView>().FromInstance(_gameUIView).NonLazy();
         Container.Bind<GameUIController>().AsSingle().NonLazy();
