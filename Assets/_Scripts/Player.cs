@@ -66,25 +66,8 @@ public class Player : DoublePoolerBase<Projectile, Projectile>
 
 
         InitPool( _bulletPrefab, _laserPrefab);
+        
     }
-
-
-    /*private void InitLaserPool()
-    {
-        InitPool(ref _bulletPool, _bulletPrefab);
-    }
-
-    private void InitBulletPool()
-    {
-        InitPool(ref _laserPool, _laserPrefab);
-    }
-
-    private void InitPool(ref GameObject poolHolder, Projectile poolObject)
-    {
-        poolHolder = new GameObject(nameof(poolHolder));
-        poolHolder.transform.SetParent(transform);
-        InitPool(poolObject);
-    }*/
 
     #region Enable/Disable
 
@@ -170,16 +153,9 @@ public class Player : DoublePoolerBase<Projectile, Projectile>
         _currentLaserBarFill = 0;
     }
 
+    
+    
 
-    /*protected override void GetSetup(Projectile projectile)
-    {
-        base.GetSetup(projectile);
-
-        var bulletTransform = projectile.transform;
-        bulletTransform.position = transform.position;
-        bulletTransform.rotation = transform.rotation;
-        projectile.transform.SetParent(_bulletPool.transform);
-    }*/
 
     public override void GetSetup1(Projectile projectile)
     {
@@ -187,6 +163,7 @@ public class Player : DoublePoolerBase<Projectile, Projectile>
         var bulletTransform = projectile.transform;
         bulletTransform.position = transform.position;
         bulletTransform.rotation = transform.rotation;
+        projectile.transform.SetParent(transform);
     }
 
     public override void GetSetup2(Projectile projectile)
@@ -195,6 +172,7 @@ public class Player : DoublePoolerBase<Projectile, Projectile>
         var bulletTransform = projectile.transform;
         bulletTransform.position = transform.position;
         bulletTransform.rotation = transform.rotation;
+        projectile.transform.SetParent(transform);
     }
 
 
