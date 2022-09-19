@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameUIView : MonoBehaviour
 {
@@ -11,11 +12,25 @@ public class GameUIView : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _yPlayerTransform;
     [SerializeField] private TextMeshProUGUI _playerRotationAngle;
     [SerializeField] private TextMeshProUGUI _playerVelocity;
+    [SerializeField] private Slider _laserProgressBar;
+    [SerializeField] private TextMeshProUGUI _laserCharges;
 
     public TextMeshProUGUI PlayerVelocity
     {
         get => _playerVelocity;
         set => _playerVelocity = value;
+    }
+
+    public Slider LaserProgressBar
+    {
+        get => _laserProgressBar;
+        set => _laserProgressBar = value;
+    }
+
+    public TextMeshProUGUI LaserCharges
+    {
+        get => _laserCharges;
+        set => _laserCharges = value;
     }
 
     public TextMeshProUGUI PlayerRotationAngle

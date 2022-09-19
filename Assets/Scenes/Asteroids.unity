@@ -289,7 +289,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 1
+  m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1423,7 +1423,7 @@ GameObject:
   - component: {fileID: 923115895}
   - component: {fileID: 923115894}
   m_Layer: 5
-  m_Name: CurrentScore
+  m_Name: LaserCharges
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2147,6 +2147,8 @@ MonoBehaviour:
   _yPlayerTransform: {fileID: 442308520}
   _playerRotationAngle: {fileID: 496952474}
   _playerVelocity: {fileID: 1509365438}
+  _laserProgressBar: {fileID: 176540294}
+  _laserCharges: {fileID: 923115894}
 --- !u!1 &1331770030
 GameObject:
   m_ObjectHideFlags: 0

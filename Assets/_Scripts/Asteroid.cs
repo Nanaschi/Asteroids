@@ -61,7 +61,7 @@ public class Asteroid : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.GetComponent<Bullet>())
+        if (col.GetComponent<Projectile>())
         {
             if ((_size * .5f) >= _asteroidConfig.MinSize)
             {

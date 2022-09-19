@@ -8,22 +8,44 @@ using Zenject;
 
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class Player : PoolerBase<Bullet>
+public class Player : PoolerBase<Projectile>
 {
     private PlayerInputActions _playerInputActions;
     private bool _thrusting;
     private float _turnDirection;
     private Rigidbody2D _rigidbody2D;
-    [SerializeField] private Bullet _bulletPrefab;
+
+    [SerializeField] private Projectile projectilePrefab;
+
+    [SerializeField] private Projectile _laserPrefab;
 
     [SerializeField] private PlayerConfig _playerConfig;
     private GameObject _bulletPool;
+    private GameObject _laserPool;
+    [SerializeField] private float _fillSpeed;
+    [SerializeField] private float _fillPercent;
+    private float _currentLaserBarFill;
+    private int _currentLaserCharges;
+
+    protected int CurrentLaserCharges
+    {
+        get => _currentLaserCharges;
+        set
+        {
+            _currentLaserCharges = value;
+            OnLaserChargeChanged?.Invoke(value);
+        }
+    }
 
     public PlayerConfig PlayerConfig => _playerConfig;
 
     public static event Action OnAsteroidCollided;
     public static event Action<Transform> OnTransformChanged;
     public static event Action<Rigidbody2D> OnActiveVelocity;
+
+    public static event Func<float, float> OnLaserFilled;
+
+    public static event Action<int> OnLaserChargeChanged;
 
     #region private properties
 
@@ -44,9 +66,27 @@ public class Player : PoolerBase<Bullet>
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
 
-        _bulletPool = new GameObject(nameof(_bulletPool));
-        _bulletPool.transform.SetParent(transform);
-        InitPool(_bulletPrefab);
+
+        InitBulletPool();
+        InitLaserPool();
+    }
+
+
+    private void InitLaserPool()
+    {
+        InitPool(ref _bulletPool, projectilePrefab);
+    }
+
+    private void InitBulletPool()
+    {
+        InitPool(ref _laserPool, _laserPrefab);
+    }
+
+    private void InitPool(ref GameObject poolHolder, Projectile poolObject)
+    {
+        poolHolder = new GameObject(nameof(poolHolder));
+        poolHolder.transform.SetParent(transform);
+        InitPool(poolObject);
     }
 
     #region Enable/Disable
@@ -54,13 +94,13 @@ public class Player : PoolerBase<Bullet>
     private void OnEnable()
     {
         _playerInputActions.Player.Shoot.performed += Shoot;
-        Bullet.OnBoundaryReached += Release;
+        Projectile.OnBoundaryReached += Release;
     }
 
     private void OnDisable()
     {
         _playerInputActions.Player.Shoot.performed -= Shoot;
-        Bullet.OnBoundaryReached -= Release;
+        Projectile.OnBoundaryReached -= Release;
     }
 
     #endregion
@@ -73,6 +113,23 @@ public class Player : PoolerBase<Bullet>
         {
             OnTransformChanged?.Invoke(transform);
             OnActiveVelocity?.Invoke(_rigidbody2D);
+        }
+    }
+
+    private void Start()
+    {
+        InvokeRepeating(nameof(FillLaserBar), 0, _fillSpeed);
+    }
+
+    private void FillLaserBar()
+    {
+        _currentLaserBarFill += _fillPercent;
+        var barPercent = OnLaserFilled?.Invoke(_currentLaserBarFill);
+        if (barPercent >= 1)
+        {
+            _currentLaserBarFill = 0;
+            OnLaserFilled?.Invoke(_currentLaserBarFill);
+            CurrentLaserCharges++;
         }
     }
 
@@ -96,14 +153,14 @@ public class Player : PoolerBase<Bullet>
     }
 
 
-    protected override void GetSetup(Bullet bullet)
+    protected override void GetSetup(Projectile projectile)
     {
-        base.GetSetup(bullet);
+        base.GetSetup(projectile);
 
-        var bulletTransform = bullet.transform;
+        var bulletTransform = projectile.transform;
         bulletTransform.position = transform.position;
         bulletTransform.rotation = transform.rotation;
-        bullet.transform.SetParent(_bulletPool.transform);
+        projectile.transform.SetParent(_bulletPool.transform);
     }
 
     private void OnTriggerEnter2D(Collider2D col)
@@ -121,5 +178,11 @@ public class Player : PoolerBase<Bullet>
 
     public class Factory : PlaceholderFactory<Player>
     {
+        public override Player Create()
+        {
+            var player = base.Create();
+            player.CurrentLaserCharges = 0;
+            return player;
+        }
     }
 }

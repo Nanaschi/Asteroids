@@ -2,13 +2,16 @@ using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class Bullet : MonoBehaviour
+//TODO: make it a base for bullet and laser
+//the difference will be in if (col.GetComponentInParent<Boundary>() || col.GetComponent<Asteroid>())
+//also in _bulletSpeed probably in Scriptable Objects
+public class Projectile : MonoBehaviour
 {
     private Rigidbody2D _rigidbody2D;
-    //too small for a separate Scriptable Object
+    //TODO: too small for a separate Scriptable Object
     [SerializeField] private float _bulletSpeed;
 
-    public static  event Action<Bullet> OnBoundaryReached;
+    public static  event Action<Projectile> OnBoundaryReached;
 
 
     private void Awake()
