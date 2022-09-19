@@ -5,7 +5,7 @@ using Zenject;
 
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class Player : PoolerBase<Projectile>
+public class Player : DoublePoolerBase<Projectile, Projectile>
 {
     private PlayerInputActions _playerInputActions;
     private bool _thrusting;
@@ -65,12 +65,11 @@ public class Player : PoolerBase<Projectile>
         _rigidbody2D = GetComponent<Rigidbody2D>();
 
 
-        InitBulletPool();
-        InitLaserPool();
+        InitPool( _bulletPrefab, _laserPrefab);
     }
 
 
-    private void InitLaserPool()
+    /*private void InitLaserPool()
     {
         InitPool(ref _bulletPool, _bulletPrefab);
     }
@@ -85,7 +84,7 @@ public class Player : PoolerBase<Projectile>
         poolHolder = new GameObject(nameof(poolHolder));
         poolHolder.transform.SetParent(transform);
         InitPool(poolObject);
-    }
+    }*/
 
     #region Enable/Disable
 
@@ -93,14 +92,16 @@ public class Player : PoolerBase<Projectile>
     {
         _playerInputActions.Player.ShootPrimary.performed += ShootPrimary;
         _playerInputActions.Player.ShootSecondary.performed += ShootSecondary;
-        Projectile.OnBoundaryReached += Release;
+        Bullet.OnBoundaryReached += Release1;
+        Laser.OnBoundaryReached += Release2;
     }
 
     private void OnDisable()
     {
         _playerInputActions.Player.ShootPrimary.performed -= ShootPrimary;
         _playerInputActions.Player.ShootSecondary.performed -= ShootSecondary;
-        Projectile.OnBoundaryReached -= Release;
+        Bullet.OnBoundaryReached -= Release1;
+        Laser.OnBoundaryReached -= Release2;
     }
 
     #endregion
@@ -149,14 +150,14 @@ public class Player : PoolerBase<Projectile>
 
     private void ShootPrimary(InputAction.CallbackContext callbackContext)
     {
-        var bullet = Get();
+        var bullet = Get1();
 
         bullet.Project(TransformUp); //TODO: Here implement the base class or interface
     }
 
     private void ShootSecondary(InputAction.CallbackContext callbackContext)
     {
-        var bullet = Get();
+        var bullet = Get2();
 
         ReduceCharges();
         bullet.Project(TransformUp); //TODO: Here implement the base class or interface
@@ -170,7 +171,7 @@ public class Player : PoolerBase<Projectile>
     }
 
 
-    protected override void GetSetup(Projectile projectile)
+    /*protected override void GetSetup(Projectile projectile)
     {
         base.GetSetup(projectile);
 
@@ -178,7 +179,24 @@ public class Player : PoolerBase<Projectile>
         bulletTransform.position = transform.position;
         bulletTransform.rotation = transform.rotation;
         projectile.transform.SetParent(_bulletPool.transform);
+    }*/
+
+    public override void GetSetup1(Projectile projectile)
+    {
+        base.GetSetup1(projectile);
+        var bulletTransform = projectile.transform;
+        bulletTransform.position = transform.position;
+        bulletTransform.rotation = transform.rotation;
     }
+
+    public override void GetSetup2(Projectile projectile)
+    {
+        base.GetSetup2(projectile);
+        var bulletTransform = projectile.transform;
+        bulletTransform.position = transform.position;
+        bulletTransform.rotation = transform.rotation;
+    }
+
 
     private void OnTriggerEnter2D(Collider2D col)
     {

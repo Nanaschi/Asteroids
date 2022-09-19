@@ -1,12 +1,17 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
-class Bullet : Projectile
+public class Bullet : Projectile
 {
+    
+    public static event Action<Bullet> OnBoundaryReached;
+    
     public override void OnTriggerEnter2D(Collider2D col)
     {
+        
         if (col.GetComponentInParent<Boundary>() || col.GetComponent<Asteroid>())
         {
-            BoundaryReached(this);
+            OnBoundaryReached?.Invoke(this);
         }
     }
 }

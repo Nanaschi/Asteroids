@@ -14,7 +14,7 @@ public abstract class Projectile : MonoBehaviour
     [FormerlySerializedAs("_bulletSpeed")] [SerializeField]
     private float _projectileSpeed;
 
-    public static event Action<Projectile> OnBoundaryReached;
+   
 
 
     private void Awake()
@@ -28,10 +28,6 @@ public abstract class Projectile : MonoBehaviour
     }
 
     public abstract void OnTriggerEnter2D(Collider2D col);
-
-    protected void BoundaryReached(Projectile projectile)
-    {
-        OnBoundaryReached?.Invoke(projectile);
-    }
+    
     
 }
