@@ -184,6 +184,33 @@ public class Player : DoublePoolerBase<Projectile, Projectile>
 
             OnAsteroidCollided?.Invoke();
         }
+
+        if (col.transform.parent.TryGetComponent(out Boundary boundary))
+        {
+            if (col == boundary.LeftBoxCollider2D)
+            {
+                transform.position = new Vector3(-transform.position.x, transform.position.y,
+                    transform.position.z);
+            }
+
+            if (col == boundary.UpBoxCollider2D)
+            {
+                transform.position = new Vector3(transform.position.x, -transform.position.y,
+                    transform.position.z);
+            }
+
+            if (col == boundary.RightBoxCollider2D)
+            {
+                transform.position = new Vector3(-transform.position.x, transform.position.y,
+                    transform.position.z);
+            }
+
+            if (col == boundary.DownBoxCollider2D)
+            {
+                transform.position = new Vector3(transform.position.x, -transform.position.y,
+                    transform.position.z);
+            }
+        }
     }
 
     public class Factory : PlaceholderFactory<Player>
