@@ -64,6 +64,15 @@ public class AsteroidManager : DoublePoolerBase<Asteroid, UFO>
             asteroid.Size = Random.Range(asteroid.MinSize, asteroid.MaxSize);
 
             asteroid.SetTrajectory(spawnRotation * -spawnDirection);
+            
+            
+            UFO  ufo= Get2();
+
+            ufo.transform.position = spawnPoint;
+            ufo.transform.rotation = spawnRotation;
+
+            ufo.transform.SetParent(_asteroidPool.transform);
+
         }
     }
 }
