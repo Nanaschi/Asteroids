@@ -65,8 +65,7 @@ public class Player : DoublePoolerBase<Projectile, Projectile>
         _rigidbody2D = GetComponent<Rigidbody2D>();
 
 
-        InitPool( _bulletPrefab, _laserPrefab);
-        
+        InitPool(_bulletPrefab, _laserPrefab);
     }
 
     #region Enable/Disable
@@ -140,10 +139,11 @@ public class Player : DoublePoolerBase<Projectile, Projectile>
 
     private void ShootSecondary(InputAction.CallbackContext callbackContext)
     {
+        if (CurrentLaserCharges < 1) return;
         var bullet = Get2();
 
         ReduceCharges();
-        bullet.Project(TransformUp); //TODO: Here implement the base class or interface
+        bullet.Project(TransformUp);
     }
 
 
@@ -152,9 +152,6 @@ public class Player : DoublePoolerBase<Projectile, Projectile>
         CurrentLaserCharges--;
         _currentLaserBarFill = 0;
     }
-
-    
-    
 
 
     public override void GetSetup1(Projectile projectile)
