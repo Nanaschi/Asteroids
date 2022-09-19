@@ -5,9 +5,10 @@ using UnityEngine;
 using Zenject;
 using Random = UnityEngine.Random;
 
-public class AsteroidManager : PoolerBase<Asteroid>
+public class AsteroidManager : DoublePoolerBase<Asteroid, UFO>
 {
     [SerializeField] private Asteroid _asteroidPrefab;
+    [SerializeField] private UFO _ufoPrefab;
     public Asteroid AsteroidPrefab => _asteroidPrefab;
 
     private GameObject _asteroidPool;
@@ -16,19 +17,19 @@ public class AsteroidManager : PoolerBase<Asteroid>
     {
         _asteroidPool = new GameObject(nameof(_asteroidPool));
         _asteroidPool.transform.SetParent(transform);
-        InitPool(_asteroidPrefab);
+        InitPool(_asteroidPrefab, _ufoPrefab);
     }
 
     private void OnEnable()
     {
-        Asteroid.OnAsteroidDestroyed += Release;
-        Asteroid.OnAsteroidSplit += Get;
+        Asteroid.OnAsteroidDestroyed += Release1;
+        Asteroid.OnAsteroidSplit += Get1;
     }
 
     private void OnDisable()
     {
-        Asteroid.OnAsteroidDestroyed -= Release;
-        Asteroid.OnAsteroidSplit -= Get;
+        Asteroid.OnAsteroidDestroyed -= Release1;
+        Asteroid.OnAsteroidSplit -= Get1;
     }
 
     private void Start()
@@ -54,7 +55,7 @@ public class AsteroidManager : PoolerBase<Asteroid>
                 _asteroidPrefab.AsteroidConfig.TrajectoryVariance);
 
             Quaternion spawnRotation = Quaternion.AngleAxis(variance, Vector3.forward);
-            Asteroid asteroid = Get();
+            Asteroid asteroid = Get1();
 
             asteroid.transform.position = spawnPoint;
             asteroid.transform.rotation = spawnRotation;

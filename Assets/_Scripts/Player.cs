@@ -175,9 +175,9 @@ public class Player : DoublePoolerBase<Projectile, Projectile>
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.GetComponent<Asteroid>())
+        if (col.GetComponent<Asteroid>() || col.GetComponent<UFO>())
         {
-            AsteroidCollide();
+            FatalCollide();
         }
 
         if (col.transform.parent.TryGetComponent(out Boundary boundary))
@@ -186,7 +186,7 @@ public class Player : DoublePoolerBase<Projectile, Projectile>
         }
     }
 
-    private void AsteroidCollide()
+    private void FatalCollide()
     {
         _rigidbody2D.velocity = Vector3.zero;
         _rigidbody2D.angularVelocity = 0;

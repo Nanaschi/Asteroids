@@ -4,7 +4,7 @@ using Random = UnityEngine.Random;
 
 
 [RequireComponent(typeof(SpriteRenderer), typeof(Rigidbody2D))]
-public class Asteroid : MonoBehaviour
+public class Asteroid : MonoBehaviour, ITrajectable
 {
     private const int FullCircle = 360;
 
@@ -88,4 +88,9 @@ public class Asteroid : MonoBehaviour
 
         splitAsteroid.SetTrajectory(Random.insideUnitCircle.normalized * _asteroidConfig.Speed);
     }
+}
+
+public interface ITrajectable
+{
+    public void SetTrajectory(Vector2 direction);
 }
