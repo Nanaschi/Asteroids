@@ -177,39 +177,50 @@ public class Player : DoublePoolerBase<Projectile, Projectile>
     {
         if (col.GetComponent<Asteroid>())
         {
-            _rigidbody2D.velocity = Vector3.zero;
-            _rigidbody2D.angularVelocity = 0;
-
-            gameObject.SetActive(false);
-
-            OnAsteroidCollided?.Invoke();
+            AsteroidCollide();
         }
 
         if (col.transform.parent.TryGetComponent(out Boundary boundary))
         {
-            if (col == boundary.LeftBoxCollider2D)
-            {
-                transform.position = new Vector3(-transform.position.x, transform.position.y,
-                    transform.position.z);
-            }
+            InfiniteBorder(col, boundary);
+        }
+    }
 
-            if (col == boundary.UpBoxCollider2D)
-            {
-                transform.position = new Vector3(transform.position.x, -transform.position.y,
-                    transform.position.z);
-            }
+    private void AsteroidCollide()
+    {
+        _rigidbody2D.velocity = Vector3.zero;
+        _rigidbody2D.angularVelocity = 0;
 
-            if (col == boundary.RightBoxCollider2D)
-            {
-                transform.position = new Vector3(-transform.position.x, transform.position.y,
-                    transform.position.z);
-            }
+        gameObject.SetActive(false);
 
-            if (col == boundary.DownBoxCollider2D)
-            {
-                transform.position = new Vector3(transform.position.x, -transform.position.y,
-                    transform.position.z);
-            }
+        OnAsteroidCollided?.Invoke();
+    }
+
+    private void InfiniteBorder(Collider2D col, Boundary boundary)
+    {
+        
+        if (col == boundary.LeftBoxCollider2D)
+        {
+            transform.position = new Vector3(-transform.position.x, transform.position.y,
+                transform.position.z);
+        }
+
+        if (col == boundary.UpBoxCollider2D)
+        {
+            transform.position = new Vector3(transform.position.x, -transform.position.y,
+                transform.position.z);
+        }
+
+        if (col == boundary.RightBoxCollider2D)
+        {
+            transform.position = new Vector3(-transform.position.x, transform.position.y,
+                transform.position.z);
+        }
+
+        if (col == boundary.DownBoxCollider2D)
+        {
+            transform.position = new Vector3(transform.position.x, -transform.position.y,
+                transform.position.z);
         }
     }
 

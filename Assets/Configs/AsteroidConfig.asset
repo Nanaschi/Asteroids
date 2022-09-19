@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: AsteroidConfig
   m_EditorClassIdentifier: 
   _asteroidModel:
-    _spawnRate: 0
+    _spawnRate: 3
     _trajectoryVariance: 15
     _spawnAmount: 2
     _spawnDistance: 15

@@ -95,7 +95,7 @@ public class GameManager : MonoBehaviour
         print("AsteroidDestroyed");
         _explosionPrefab.transform.position = asteroid.transform.position;
         _explosionPrefab.Play();
-        Score++;
+        Score+=100;
     }
 
     private void GameOver()

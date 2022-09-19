@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 2122149412976063900}
   - component: {fileID: 2122149412976063903}
   - component: {fileID: 2122149412976063898}
-  - component: {fileID: 2122149412976063901}
   - component: {fileID: 6924173128206905337}
+  - component: {fileID: 6695332351180339618}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -108,32 +108,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!61 &2122149412976063901
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2122149412976063902}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.5, y: 0.5}
-  m_EdgeRadius: 0
 --- !u!114 &6924173128206905337
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,6 +123,22 @@ MonoBehaviour:
   _bulletPrefab: {fileID: 130447629619974274, guid: 762304de563e753419b288cf64e7e3e6, type: 3}
   _laserPrefab: {fileID: 7453876409008230793, guid: 941186aedf48f0a498416ed2e2a75451, type: 3}
   _playerConfig: {fileID: 11400000, guid: d92cacf5545537a45be1afb90d5d1521, type: 2}
-  _fillSpeed: 0.3
-  _fillPercent: 0.2
+  _fillSpeed: 0.001
+  _fillPercent: 0.005
   _maximumLaserCharges: 3
+--- !u!58 &6695332351180339618
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2122149412976063902}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.25

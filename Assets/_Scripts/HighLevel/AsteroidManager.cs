@@ -33,6 +33,12 @@ public class AsteroidManager : PoolerBase<Asteroid>
 
     private void Start()
     {
+        StartSpawningAsteroids();
+    }
+
+    private void StartSpawningAsteroids()
+    {
+        if (_asteroidPrefab.AsteroidConfig.SpawnRate <= 0) return;
         InvokeRepeating(nameof(Spawn), _asteroidPrefab.AsteroidConfig.SpawnRate,
             _asteroidPrefab.AsteroidConfig.SpawnRate);
     }
