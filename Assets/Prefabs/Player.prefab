@@ -150,4 +150,5 @@ MonoBehaviour:
   _laserPrefab: {fileID: 4309503351288673540, guid: 941186aedf48f0a498416ed2e2a75451, type: 3}
   _playerConfig: {fileID: 11400000, guid: d92cacf5545537a45be1afb90d5d1521, type: 2}
   _fillSpeed: 0.2
-  _fillPercent: 0.1
+  _fillPercent: 0.3
+  _maximumLaserCharges: 3

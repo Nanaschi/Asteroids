@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
@@ -24,10 +25,11 @@ public class Player : PoolerBase<Projectile>
     private GameObject _laserPool;
     [SerializeField] private float _fillSpeed;
     [SerializeField] private float _fillPercent;
+    [SerializeField] private int _maximumLaserCharges;
     private float _currentLaserBarFill;
     private int _currentLaserCharges;
 
-    protected int CurrentLaserCharges
+    private int CurrentLaserCharges
     {
         get => _currentLaserCharges;
         set
@@ -123,13 +125,16 @@ public class Player : PoolerBase<Projectile>
 
     private void FillLaserBar()
     {
+        if(CurrentLaserCharges >= _maximumLaserCharges) return;
         _currentLaserBarFill += _fillPercent;
         var barPercent = OnLaserFilled?.Invoke(_currentLaserBarFill);
         if (barPercent >= 1)
         {
+            CurrentLaserCharges++;
+            if(CurrentLaserCharges >= _maximumLaserCharges) return;
             _currentLaserBarFill = 0;
             OnLaserFilled?.Invoke(_currentLaserBarFill);
-            CurrentLaserCharges++;
+           
         }
     }
 
@@ -149,7 +154,14 @@ public class Player : PoolerBase<Projectile>
     {
         var bullet = Get();
 
+        ReduceCharges();
         bullet.Project(TransformUp);
+    }
+
+    private void ReduceCharges()
+    {
+        CurrentLaserCharges--;
+        _currentLaserBarFill = 0;
     }
 
 
