@@ -182,6 +182,7 @@ namespace _Scripts
 
             if (col.transform.parent.TryGetComponent(out Boundary boundary))
             {
+                if(col == null || boundary == null) return;
                 InfiniteBorder(col, boundary);
             }
         }

@@ -1,3 +1,5 @@
+using System;
+using _Scripts.Projectiles;
 using UnityEngine;
 
 namespace _Scripts.FlyingObjects
@@ -5,7 +7,7 @@ namespace _Scripts.FlyingObjects
     public class UFO : MonoBehaviour
     {
         private Player _player;
-
+        public static event Action<UFO> OnUFODestroyed;
         public Player Player
         {
             get => _player;
@@ -24,6 +26,15 @@ namespace _Scripts.FlyingObjects
         {
             transform.position = Vector3.MoveTowards(transform.position, _player.transform.position,
                 moveSpeed * Time.deltaTime);
+        }
+        
+        
+        private void OnTriggerEnter2D(Collider2D col)
+        {
+            if (col.GetComponent<Projectile>())
+            {
+                OnUFODestroyed?.Invoke(this);
+            }
         }
     }
 }

@@ -9,14 +9,13 @@ namespace _Scripts.HighLevel
     {
         [SerializeField] private Asteroid _asteroidPrefab;
         [SerializeField] private UFO _ufoPrefab;
-        public Asteroid AsteroidPrefab => _asteroidPrefab;
 
         private GameObject _asteroidPool;
         private Player.Factory _factory;
 
 
         [Inject]
-        private void InitiInject(Player.Factory factory)
+        private void InitInject(Player.Factory factory)
         {
             _factory = factory;
         }
@@ -32,12 +31,14 @@ namespace _Scripts.HighLevel
         {
             Asteroid.OnAsteroidDestroyed += Release1;
             Asteroid.OnAsteroidSplit += Get1;
+            UFO.OnUFODestroyed += Release2;
         }
 
         private void OnDisable()
         {
             Asteroid.OnAsteroidDestroyed -= Release1;
             Asteroid.OnAsteroidSplit -= Get1;
+            UFO.OnUFODestroyed -= Release2;
         }
 
         private void Start()
