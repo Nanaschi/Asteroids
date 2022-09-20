@@ -19,9 +19,7 @@ public class Player : DoublePoolerBase<Projectile, Projectile>
     [SerializeField] private PlayerConfig _playerConfig;
     private GameObject _bulletPool;
     private GameObject _laserPool;
-    [SerializeField] private float _fillSpeed;
-    [SerializeField] private float _fillPercent;
-    [SerializeField] private int _maximumLaserCharges;
+
     private float _currentLaserBarFill;
     private int _currentLaserCharges;
 
@@ -101,18 +99,18 @@ public class Player : DoublePoolerBase<Projectile, Projectile>
 
     private void Start()
     {
-        InvokeRepeating(nameof(FillLaserBar), 0, _fillSpeed);
+        InvokeRepeating(nameof(FillLaserBar), 0, _playerConfig.FillSpeed);
     }
 
     private void FillLaserBar()
     {
-        if (CurrentLaserCharges >= _maximumLaserCharges) return;
-        _currentLaserBarFill += _fillPercent;
+        if (CurrentLaserCharges >= _playerConfig.MaximumLaserCharges) return;
+        _currentLaserBarFill += _playerConfig.FillPercent;
         var barPercent = OnLaserFilled?.Invoke(_currentLaserBarFill);
         if (barPercent >= 1)
         {
             CurrentLaserCharges++;
-            if (CurrentLaserCharges >= _maximumLaserCharges) return;
+            if (CurrentLaserCharges >= _playerConfig.MaximumLaserCharges) return;
             _currentLaserBarFill = 0;
             OnLaserFilled?.Invoke(_currentLaserBarFill);
         }
