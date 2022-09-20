@@ -1,21 +1,30 @@
-using System.Collections;
-using System.Collections.Generic;
+using _Scripts.Projectiles;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = nameof(PlayerConfig),
-    menuName = "Scriptable Objects/" + nameof(PlayerConfig))]
-public class PlayerConfig : ScriptableObject
+namespace _Scripts.ScriptableObjects
 {
-    [SerializeField] private PlayerModel _playerModel;
-    
-    public float FillSpeed => _playerModel.FillSpeed;
+    [CreateAssetMenu(fileName = nameof(PlayerConfig),
+        menuName = "Scriptable Objects/" + nameof(PlayerConfig))]
+    public class PlayerConfig : ScriptableObject
+    {
+        [SerializeField] private PlayerModel _playerModel;
+        [SerializeField] private Projectile _bulletPrefab;
 
-    public float FillPercent => _playerModel.FillPercent;
+        [SerializeField] private Projectile _laserPrefab;
 
-    public int MaximumLaserCharges => _playerModel.MaximumLaserCharges;
-    public int MaxLives => _playerModel.MaxLives;
-    public int RespawnTime => _playerModel.RespawnTime;
-    public int TimeOfInvincibility => _playerModel.TimeOfInvincibility;
-    public float MovementSpeed => _playerModel.MovementSpeed;
-    public float TurnSpeed => _playerModel.TurnSpeed;
+        public Projectile BulletPrefab => _bulletPrefab;
+
+        public Projectile LaserPrefab => _laserPrefab;
+
+        public float FillSpeed => _playerModel.FillSpeed;
+
+        public float FillPercent => _playerModel.FillPercent;
+
+        public int MaximumLaserCharges => _playerModel.MaximumLaserCharges;
+        public int MaxLives => _playerModel.MaxLives;
+        public int RespawnTime => _playerModel.RespawnTime;
+        public int TimeOfInvincibility => _playerModel.TimeOfInvincibility;
+        public float MovementSpeed => _playerModel.MovementSpeed;
+        public float TurnSpeed => _playerModel.TurnSpeed;
+    }
 }

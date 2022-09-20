@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Text;
+using _Scripts.HighLevel;
 using UnityEngine;
-using Zenject;
 
-namespace _Scripts
+namespace _Scripts.UI
 {
     public class GameUIController
     {

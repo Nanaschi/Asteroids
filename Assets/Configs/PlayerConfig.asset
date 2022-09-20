@@ -21,3 +21,5 @@ MonoBehaviour:
     _fillSpeed: 0.001
     _fillPercent: 0.005
     _maximumLaserCharges: 5
+  _bulletPrefab: {fileID: 130447629619974274, guid: 762304de563e753419b288cf64e7e3e6, type: 3}
+  _laserPrefab: {fileID: 7453876409008230793, guid: 941186aedf48f0a498416ed2e2a75451, type: 3}

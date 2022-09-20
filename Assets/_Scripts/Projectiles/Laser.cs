@@ -1,15 +1,18 @@
 ﻿using System;
 using UnityEngine;
 
-public class Laser : Projectile
+namespace _Scripts.Projectiles
 {
-    public static event Action<Laser> OnBoundaryReached;
-    
-    public override void OnTriggerEnter2D(Collider2D col)
+    public class Laser : Projectile
     {
-        if (col.GetComponentInParent<Boundary>())
+        public static event Action<Laser> OnBoundaryReached;
+    
+        public override void OnTriggerEnter2D(Collider2D col)
         {
-            OnBoundaryReached?.Invoke(this);
+            if (col.GetComponentInParent<Boundary>())
+            {
+                OnBoundaryReached?.Invoke(this);
+            }
         }
     }
 }

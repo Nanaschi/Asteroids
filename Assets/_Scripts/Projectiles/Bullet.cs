@@ -1,17 +1,21 @@
 ﻿using System;
+using _Scripts.FlyingObjects;
 using UnityEngine;
 
-public class Bullet : Projectile
+namespace _Scripts.Projectiles
 {
-    
-    public static event Action<Bullet> OnBoundaryReached;
-    
-    public override void OnTriggerEnter2D(Collider2D col)
+    public class Bullet : Projectile
     {
-        
-        if (col.GetComponentInParent<Boundary>() || col.GetComponent<Asteroid>())
+    
+        public static event Action<Bullet> OnBoundaryReached;
+    
+        public override void OnTriggerEnter2D(Collider2D col)
         {
-            OnBoundaryReached?.Invoke(this);
+        
+            if (col.GetComponentInParent<Boundary>() || col.GetComponent<Asteroid>())
+            {
+                OnBoundaryReached?.Invoke(this);
+            }
         }
     }
 }
